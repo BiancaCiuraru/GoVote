@@ -1,7 +1,6 @@
 ﻿@page "/candidates"
 @inject HttpClient Http
-
-<NavMenuBar />
+<!--<NavMenuBar />
 <div class="w-100 h-100 pt-5">
     <div class="row p-5">
         <div class="col-sm-5">
@@ -66,6 +65,79 @@
             </div>
         </div>
     </div>
+</div>-->
+
+<div class="wrapper1">
+    <NavMenuBar />
+    <main class="page-candidates d-flex flex-row">
+        <div class="candidates-list d-flex flex-column w-50">
+            <h1>Candidati</h1>
+            <div class="list d-flex flex-column w-100">
+                <div class="card flex-row text-black mb-4 p-3">
+                    <div class="imagee align-self-center">
+                        <img src="assets/pnl.png" />
+                    </div>
+                    <div class="p-3 name">
+                        <h3 class="card-title text-center font-weight-bold">Andrei Marin</h3>
+                        <p class="card-text text-center font-italic">id</p>
+                    </div>
+                    <div class="w-30 align-self-center">
+                        <button class="btn btn-primary" id="confirm" type="button" data-toggle="modal" data-target="#voteModal">Voteaza</button>
+                    </div>
+                </div>
+                <div class="card flex-row text-black mb-4 p-3">
+                    <div class="imagee align-self-center">
+                        <img src="assets/pnl.png" />
+                    </div>
+                    <div class="p-3 name">
+                        <h3 class="card-title text-center font-weight-bold">Andrei Marin</h3>
+                        <p class="card-text text-center font-italic">id</p>
+                    </div>
+                    <div class="w-30 align-self-center">
+                        <button class="btn btn-primary" id="confirm" type="button" data-toggle="modal" data-target="#voteModal">Voteaza</button>
+                    </div>
+                </div>
+                <div class="card flex-row text-black mb-4 p-3">
+                    <div class="imagee align-self-center">
+                        <img src="assets/pnl.png" />
+                    </div>
+                    <div class="p-3 name">
+                        <h3 class="card-title text-center font-weight-bold">Andrei Marin</h3>
+                        <p class="card-text text-center font-italic">id</p>
+                    </div>
+                    <div class="w-30 align-self-center">
+                        <button class="btn btn-primary" id="confirm" type="button" data-toggle="modal" data-target="#voteModal">Voteaza</button>
+                    </div>
+                </div>
+                <div class="card flex-row text-black mb-4 p-3">
+                    <div class="imagee align-self-center">
+                        <img src="assets/pnl.png" />
+                    </div>
+                    <div class="p-3 name">
+                        <h3 class="card-title text-center font-weight-bold">Andrei Marin</h3>
+                        <p class="card-text text-center font-italic">id</p>
+                    </div>
+                    <div class="w-30 align-self-center">
+                        <button class="btn btn-primary" id="confirm" type="button" data-toggle="modal" data-target="#voteModal">Voteaza</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="statistics d-flex flex-column w-50">
+            <h1>Statistici</h1>
+            <div class="selection mx-auto mb-3">
+                <select class="browser-default custom-select" @onchange=@TestFunction>
+                    <option value="Bla">Tara</option>
+                    <option value="Bla">Oras</option>
+                </select>
+            </div>
+            <div>Varsta 1-2</div>
+            <div>Female Votes : 2</div>
+            <div>Male Votes : 3</div>
+        </div>
+    </main>
+    <BottomBar />
 </div>
 
 
@@ -112,7 +184,7 @@
     protected async Task TestFunction(ChangeEventArgs e)
     {
         selectedString = e.Value.ToString();
-        
+
         if (selectedString == "Varsta 18-30")
             content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/age18_30");
         if (selectedString == "Varsta 31-60")
