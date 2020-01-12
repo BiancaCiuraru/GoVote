@@ -5,13 +5,13 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 
-namespace Users_MS.Share
+namespace GoVote.Authentication
 {
     public static class AuthenticationConfig
     {
         public static void ConfigureJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("TokenKeys").GetSection("DefaultKey").Value));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Keys").GetSection("Key").Value));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var tokenValidationParams = new TokenValidationParameters()
@@ -23,7 +23,7 @@ namespace Users_MS.Share
                 ValidateAudience = true,
                 RequireSignedTokens = true,
                 IssuerSigningKey = credentials.Key,
-                ClockSkew = TimeSpan.FromMinutes(30)
+                ClockSkew = TimeSpan.FromMinutes(120)
 
             };
 

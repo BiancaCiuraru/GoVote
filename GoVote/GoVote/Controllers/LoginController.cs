@@ -3,8 +3,6 @@ using GoVote.Data;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using GoVote.DTO;
-using System;
-using System.Text.Json;
 
 namespace GoVote.Controllers
 {
