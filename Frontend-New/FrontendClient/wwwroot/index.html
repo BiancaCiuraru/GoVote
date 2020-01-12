@@ -27,7 +27,167 @@
                 $("#authModal").modal('show');
             });
         }
+
+        var modalvote = function (callback) {
+
+            $("#voteButton").on("click", function () {
+                $("#voteModal").modal('show');
+            });
+        }
+    </script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        var selected = function (callback) {
+            $('#counties').hide();
+            $('#cities').hide();
+            var type = document.getElementById("type");
+            if (type) {
+                type = type.value;
+                if (type == 'Oras') {
+                    $("#piechart").hide();
+                    $('#cities').show();
+                }
+                else if (type == 'Localitate') {
+                    $("#piechart").hide();
+                    $('#counties').show();
+                }
+                else {
+                    $("#piechart").show();
+                    chart();
+                }
+            }
+        }
+
+        var chart = function (callback) {
+            var type = document.getElementById("type");
+            if (type)
+                type = type.value;
+            else 
+                type = 'Tara';
+            google.charts.load("visualization", "1", {
+                'packages': ['corechart']
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                if (type == 'Tara' || type == 'Oras' || type == 'Localitate' || type == 'Top 10 Candidati') {
+                    var data = google.visualization.arrayToDataTable([
+                        ['Candidat', 'Procente Voturi'],
+                        ['Iohannis', 8],
+                        ['Viorica', 3],
+                        ['Ana', 4],
+                        ['Bla', 3]
+                    ]);
+                }
+                else if (type == 'Varsta 18-30' || type == 'Varsta 31-60' || type == 'Varsta 61+') {
+                    var data = google.visualization.arrayToDataTable([
+                        ['Sex', 'Procente Prezenta'],
+                        ['Femei', 8],
+                        ['Barbati', 3]
+                    ]);
+                }
+                else if (type == 'Top 10 Orase') {
+                    var data = google.visualization.arrayToDataTable([
+                        ['Oras', 'Procent Prezenta Vot'],
+                        ['Bucuresti', 8],
+                        ['Iasi', 3],
+                        ['Bucuresti', 8],
+                        ['Iasi', 3],
+                        ['Bucuresti', 8],
+                        ['Iasi', 3],
+                        ['Bucuresti', 8],
+                        ['Iasi', 3],
+                        ['Bucuresti', 8],
+                        ['Iasi', 3]
+                    ]);
+                }
+                var options = {
+                    'backgroundColor': 'white',
+                    'pieSliceBorderColor': 'white',
+                    'titlePosition': 'none',
+                    'width': 600,
+                    'height': 400,
+                    'pieSliceTextStyle': {
+                        color: 'black',
+                        fontSize: 18
+                    },
+                    'tooltip': {
+                        text: 'percentage',
+                        textStyle: {
+                            color: 'black',
+                            fontSize: 15
+                        }
+                    },
+                    'legend': {
+                        alignment: 'center',
+                        textStyle: {
+                            color: '#16b553',
+                            fontSize: 15
+                        }
+                    },
+                    'chartArea': {
+                        left: 100,
+                        top: 10,
+                        width: "70%",
+                        height: "100px"
+                    }
+                };
+            var chart = new google.visualization.PieChart($('#piechart')[0]);
+            chart.draw(data, options);}
+        }
+
+        var chart1 = function (callback) {
+            $("#piechart").show();
+            google.charts.load("visualization", "1", {
+                'packages': ['corechart']
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Candidat', 'Procente Voturi'],
+                    ['Iohannis', 8],
+                    ['Viorica', 3],
+                    ['Ana', 4],
+                    ['Bla', 3]
+                ]);
+               
+                var options = {
+                    'backgroundColor': 'white',
+                    'pieSliceBorderColor': 'white',
+                    'titlePosition': 'none',
+                    'width': 600,
+                    'height': 400,
+                    'pieSliceTextStyle': {
+                        color: 'black',
+                        fontSize: 18
+                    },
+                    'tooltip': {
+                        text: 'percentage',
+                        textStyle: {
+                            color: 'black',
+                            fontSize: 15
+                        }
+                    },
+                    'legend': {
+                        alignment: 'center',
+                        textStyle: {
+                            color: '#16b553',
+                            fontSize: 15
+                        }
+                    },
+                    'chartArea': {
+                        left: 100,
+                        top: 10,
+                        width: "70%",
+                        height: "100px"
+                    }
+                };
+            var chart = new google.visualization.PieChart($('#piechart')[0]);
+            chart.draw(data, options);}
+        }
     </script>
 </body>
 
-</html>
+</html >
