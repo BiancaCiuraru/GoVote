@@ -1,8 +1,11 @@
 ﻿@inject NavigationManager NavigationManager
 
-<nav class="navbar navbar-light cardNavBar">
-    <a href="#"  @onclick="NavigateToHome">Home</a>
-    <a href="#" @onclick="NavigateToLogin">Log Out</a>
+<nav class="navbar fixed-top navbar-light bg-warning">
+    <a class="logo" href="#"><img src="./assets/logo.png" /></a>
+    <div class="d-flex justify-content-center align-items-center nav-buttons ">
+        <a href="#" @onclick="NavigateToHome" class="home">Home</a>
+        <button type="button" class="btn btn-outline-dark font-weight-bold" @onclick="NavigateToLogin">Log Out</button>
+    </div>
 </nav>
 
 @code

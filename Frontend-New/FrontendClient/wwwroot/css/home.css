@@ -1,57 +1,57 @@
-﻿.login {
-    background-color: #56baed;
-    border: none;
-    color: white;
-    padding: 15px 50px;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 13px;
-    box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-    border-radius: 5px 5px 5px 5px;
-    margin: 10px 10px 20px 20px;
-    cursor:pointer;
-}
-.login:hover {
-    background-color: #39ace7;
+﻿.cardHome {
+    width: 250px;
+    height: 390px;
+    margin: 20px;
+    background-color: rgb(254,211,47);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.login:active {
-    transform: scale(0.95);
-}
-.cardHome {
-    width: 360px;
-    height: 420px;
-    margin: 20px;
-    background-color: #A9A9A9;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    box-shadow: 5px 11px 33px rgba(0, 0, 0, 0.24)
+.cardHome:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3), 0 10px 25px 0 rgba(0, 0, 0, 0.3);
 }
 
 .cardSpanText {
     text-align: center;
-    width: 100%;
+    width: 80%;
     font-size: 40px;
     color: black;
+    font-family: 'Bitter', serif;
+    text-decoration: none;
 }
 
-a {
-    text-decoration: none;
+.cardHome a:visited {
     color: black;
 }
 
-    a:visited {
-        color: black;
-    }
+.cardHome a:hover {
+    text-decoration: none;
+    color: #343a40 !important;
+}
 
-    a:hover {
-        text-decoration: none;
-        color: blue;
-    }
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-.boxScreen {
-    margin-left: 10%;
-    margin-right: 10%;
+.page-main {
+    padding: 0 15%;
+    margin-top: 65px;
+    flex-grow: 1;
+    margin-bottom: 57px;
+    font-family: 'Bitter', serif;
+    text-align: center;
+}
+
+.page-main h1 {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 50px;
+}
+
+.page-main p {
+    margin-top: 30px;
+    font-size: 30px;
+    font-weight: bold;
 }
