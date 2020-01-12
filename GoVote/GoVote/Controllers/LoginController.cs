@@ -20,25 +20,23 @@ namespace GoVote.Controllers
         }
 
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<ActionResult<Citizen>> Login([FromBody]CNPContainer container)
         {
             var cnp = await _mediator.Send(container);
             if (cnp == null)
                 return NotFound();
             return Ok(cnp);
-        }
+        }*/
 
-        [HttpGet("{cnp}")]
-        public async Task<ActionResult<string>> Authorize(string cnp)
+        //[HttpGet("{cnp}")]
+        [HttpPost]
+        public async Task<ActionResult<Citizen>> Authorize([FromBody]GetCitizenDetails cnp)
         {
-            var response = await _mediator.Send(new GetCitizenDetails(cnp));
-            var json = JsonSerializer.Serialize(response);
-            if (response["succes"].Equals(false))
-            {
-                return BadRequest(json);
-            }
-            return json;
+            var response = await _mediator.Send(cnp);
+            if (response == null)
+                return NotFound();
+            return Ok(response);
         }
     }
 }
