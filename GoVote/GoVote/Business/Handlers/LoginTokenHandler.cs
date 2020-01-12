@@ -33,18 +33,18 @@ namespace GoVote.Business.Handlers
             bool succes = false;
             var response = new Dictionary<string, object>();
 
-            string tokenData;
+            string tokenData = "";
             if (citizen != null)
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("TokenKeys").GetSection("DefaultKey").Value));
-                //var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("Keys").GetSection("Key").Value));
+                var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                 var claims = new[]
                     {
                     new Claim("CNP", "")
                 };
-                var token = new JwtSecurityToken("https://localhost:44380", "https://localhost:44380", claims, DateTime.UtcNow, expires: DateTime.UtcNow.AddMinutes(120));
+                var token = new JwtSecurityToken("https://localhost:44380", "https://localhost:44380", claims, DateTime.UtcNow, expires: DateTime.UtcNow.AddMinutes(120), signingCredentials: credentials);
                 tokenData = new JwtSecurityTokenHandler().WriteToken(token);
                 succes = true;
                 response.Add("Token", tokenData);

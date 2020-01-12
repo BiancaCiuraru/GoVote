@@ -1,3 +1,4 @@
+using GoVote.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System.Reflection;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace GoVote
 {
@@ -25,6 +29,16 @@ namespace GoVote
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.ConfigureJwtAuthentication(Configuration);
+
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
+            });
+
             services.AddControllers();
             services.AddDbContext<Data.CitizenDatabaseContext>(options =>
                options.UseSqlServer(@"Server=.\SQLEXPRESS; Database=CitizenDatabaseContext;Trusted_Connection=True;")

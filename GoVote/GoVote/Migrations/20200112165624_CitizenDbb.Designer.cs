@@ -4,14 +4,16 @@ using GoVote.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GoVote.Migrations
 {
     [DbContext(typeof(CitizenDatabaseContext))]
-    partial class CitizenDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200112165624_CitizenDbb")]
+    partial class CitizenDbb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
