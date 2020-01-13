@@ -17,16 +17,19 @@
                     {
                         @foreach (var item in candidates)
                         {
-                            <div class="card flex-row text-black mb-4 p-3">
-                                <div class="imagee align-self-center">
+                            <div class="card flex-row align-items-center mb-4 p-3">
+                                <div class="imagee">
                                     <img src="assets/pnl.png" onload="chart()" />
                                 </div>
-                                <div class="p-3 name">
-                                    <h3 class="card-title text-center font-weight-bold">@item</h3>
+                                <div class="d-flex flex-row flex-wrap align-items-center justify-content-center nameVote">
+                                    <div class="name">
+                                        <h3 class="card-title font-weight-bold">@item</h3>
+                                    </div>
+                                    <div class="w-30">
+                                        <button class="btn btn-primary" id="voteButton" type="button" data-toggle="modal" data-target="#voteModal" onclick="modalauth">Votează</button>
+                                    </div>
                                 </div>
-                                <div class="w-30 align-self-center">
-                                    <button class="btn btn-primary" id="voteButton" type="button" data-toggle="modal" data-target="#voteModal" onclick="modalauth">Votează</button>
-                                </div>
+                                
                             </div>
                         }
                     }
@@ -78,7 +81,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="login" class="font-weight-bold">Introduceți CNP-ul</label>
-                    <input type="text" class="form-control" id="login" name="login" autocomplete="off" placeholder="CNP...">
+                    <input type="text" class="form-control" id="login" name="login" autocomplete="off" placeholder="CNP..." required/>
                 </div>
             </div>
             <div class="modal-footer justify-content-center">
@@ -115,14 +118,12 @@
     }
 
 
-    //private Candidate[] candidates;
-    
-    List<string> candidates = new List<string>() { "Bucuresti Blasacasdcasc", "Iasi", "Oradea", "Galati", "Cluj", "Constanta"};
+    private Candidate[] candidates;
     private string apiUrl = "https://localhost:44380/api/candidates";
 
     protected override async Task OnInitializedAsync()
     {
-        //candidates = await Http.GetJsonAsync<Candidate[]>(apiUrl);
+        candidates = await Http.GetJsonAsync<Candidate[]>(apiUrl);
     }
 
     List<string> cities = new List<string>() { "Bucuresti", "Iasi", "Oradea", "Galati", "Cluj", "Constanta"};
