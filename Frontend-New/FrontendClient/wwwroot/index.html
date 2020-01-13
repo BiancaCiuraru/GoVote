@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Online Vote</title>
+    <title>Dot Vote</title>
     <base href="/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/site.css" rel="stylesheet" />
@@ -58,14 +58,18 @@
                 if (type == 'Oras') {
                     $("#piechart").hide();
                     $('#cities').show();
+                    
+        window.addEventListener("resize", debounce(resizeContent1, 150));
                 }
                 else if (type == 'Localitate') {
                     $("#piechart").hide();
                     $('#counties').show();
+        window.addEventListener("resize", debounce(resizeContent1, 150));
                 }
                 else {
                     $("#piechart").show();
                     chart();
+        window.addEventListener("resize", debounce(resizeContent, 150));
                 }
             }
         }
@@ -113,40 +117,180 @@
                         ['Iasi', 3]
                     ]);
                 }
-                var options = {
-                    'backgroundColor': 'white',
-                    'pieSliceBorderColor': 'white',
-                    'titlePosition': 'none',
-                    'width': 600,
-                    'height': 400,
-                    'pieSliceTextStyle': {
-                        color: 'black',
-                        fontSize: 18
-                    },
-                    'tooltip': {
-                        text: 'percentage',
-                        textStyle: {
+                var width = window.matchMedia("(max-width: 1300px) and (min-width: 920px)");
+                var width1 = window.matchMedia("(max-width: 910px) and (min-width: 700px)");
+                var width2 = window.matchMedia("(max-width: 699px) and (min-width: 460px)");
+                var width3 = window.matchMedia("(max-width: 450px)");
+                if (width.matches) {
+                    var options = {
+                        'backgroundColor': 'white',
+                        'pieSliceBorderColor': 'white',
+                        'titlePosition': 'none',
+                        'width': 600,
+                        'height': 400,
+                        'pieSliceTextStyle': {
                             color: 'black',
-                            fontSize: 15
+                            fontSize: 18
+                        },
+                        'tooltip': {
+                            text: 'percentage',
+                            textStyle: {
+                                color: 'black',
+                                fontSize: 15
+                            }
+                        },
+                        'legend': {
+                            position: 'bottom',
+                            textStyle: {
+                                color: '#16b553',
+                                fontSize: 15
+                            }
+                        },
+                        'chartArea': {
+                            left: 60,
+                            top: 15,
+                            width: "80px",
+                            height: "100px"
                         }
-                    },
-                    'legend': {
-                        alignment: 'center',
-                        textStyle: {
-                            color: '#16b553',
-                            fontSize: 15
+                    };
+                    console.log(width);
+                }
+                else if (width1.matches) {
+                    var options = {
+                        'backgroundColor': 'white',
+                        'pieSliceBorderColor': 'white',
+                        'titlePosition': 'none',
+                        'width': 600,
+                        'height': 400,
+                        'pieSliceTextStyle': {
+                            color: 'black',
+                            fontSize: 18
+                        },
+                        'tooltip': {
+                            text: 'percentage',
+                            textStyle: {
+                                color: 'black',
+                                fontSize: 15
+                            }
+                        },
+                        'legend': {
+                            position: 'bottom',
+                            textStyle: {
+                                color: '#16b553',
+                                fontSize: 15
+                            }
+                        },
+                        'chartArea': {
+                            left: '20%',
+                            top: 20,
+                            width: "80px",
+                            height: "100px"
                         }
-                    },
-                    'chartArea': {
-                        left: 100,
-                        top: 10,
-                        width: "70%",
-                        height: "100px"
-                    }
-                };
-                var chart = new google.visualization.PieChart($('#piechart')[0]);
-                chart.draw(data, options);
-            }
+                    };
+                }
+                else if (width2.matches) {
+                    var options = {
+                        'backgroundColor': 'white',
+                        'pieSliceBorderColor': 'white',
+                        'titlePosition': 'none',
+                        'width': 600,
+                        'height': 400,
+                        'pieSliceTextStyle': {
+                            color: 'black',
+                            fontSize: 18
+                        },
+                        'tooltip': {
+                            text: 'percentage',
+                            textStyle: {
+                                color: 'black',
+                                fontSize: 15
+                            }
+                        },
+                        'legend': {
+                            position: 'none',
+                            textStyle: {
+                                color: '#16b553',
+                                fontSize: 15
+                            }
+                        },
+                        'chartArea': {
+                            left: 10,
+                            top: 20,
+                            width: "80px",
+                            height: "100px"
+                        }
+                    };
+                }
+                else if (width3.matches) {
+                    var options = {
+                        'backgroundColor': 'white',
+                        'pieSliceBorderColor': 'white',
+                        'titlePosition': 'none',
+                        'width': 600,
+                        'height': 400,
+                        'pieSliceTextStyle': {
+                            color: 'black',
+                            fontSize: 18
+                        },
+                        'tooltip': {
+                            text: 'percentage',
+                            textStyle: {
+                                color: 'black',
+                                fontSize: 15
+                            }
+                        },
+                        'legend': {
+                            position: 'none',
+                            textStyle: {
+                                color: '#16b553',
+                                fontSize: 15
+                            }
+                        },
+                        'chartArea': {
+                            right: 300,
+                            top: 20,
+                            width: "40px",
+                            height: "100px"
+                        }
+                    };
+                    console.log(width3);
+                }
+                else
+                    var options = {
+                        'backgroundColor': 'white',
+                        'pieSliceBorderColor': 'white',
+                        'titlePosition': 'none',
+                        'width': 600,
+                        'height': 400,
+                        'pieSliceTextStyle': {
+                            color: 'black',
+                            fontSize: 18
+                        },
+                        'tooltip': {
+                            text: 'percentage',
+                            textStyle: {
+                                color: 'black',
+                                fontSize: 15
+                            }
+                        },
+                        'legend': {
+                            position: 'bottom',
+                            textStyle: {
+                                color: '#16b553',
+                                fontSize: 15
+                            }
+                        },
+                        'chartArea': {
+                            left: 100,
+                            top: 10,
+                            width: "70%",
+                            height: "100px"
+                        }
+
+                    };
+            var chart = new google.visualization.PieChart($('#piechart')[0]);
+            chart.draw(data, options);}
+
         }
 
         var chart1 = function (callback) {
@@ -159,47 +303,205 @@
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
                     ['Candidat', 'Procente Voturi'],
-                    ['Iohannis', 8],
+                    ['Blaaaa', 20],
                     ['Viorica', 3],
                     ['Ana', 4],
                     ['Bla', 3]
                 ]);
 
-                var options = {
-                    'backgroundColor': 'white',
-                    'pieSliceBorderColor': 'white',
-                    'titlePosition': 'none',
-                    'width': 600,
-                    'height': 400,
-                    'pieSliceTextStyle': {
-                        color: 'black',
-                        fontSize: 18
-                    },
-                    'tooltip': {
-                        text: 'percentage',
-                        textStyle: {
+               
+                var width = window.matchMedia("(max-width: 1300px) and (min-width: 920px)");
+                var width1 = window.matchMedia("(max-width: 910px) and (min-width: 700px)");
+                var width2 = window.matchMedia("(max-width: 699px) and (min-width: 460px)");
+                var width3 = window.matchMedia("(max-width: 450px)");
+                if (width.matches) {
+                    var options = {
+                        'backgroundColor': 'white',
+                        'pieSliceBorderColor': 'white',
+                        'titlePosition': 'none',
+                        'width': 600,
+                        'height': 400,
+                        'pieSliceTextStyle': {
+
                             color: 'black',
-                            fontSize: 15
+                            fontSize: 18
+                        },
+                        'tooltip': {
+                            text: 'percentage',
+                            textStyle: {
+                                color: 'black',
+                                fontSize: 15
+                            }
+                        },
+                        'legend': {
+                            position: 'bottom',
+                            textStyle: {
+                                color: '#16b553',
+                                fontSize: 15
+                            }
+                        },
+                        'chartArea': {
+                            left: 60,
+                            top: 15,
+                            width: "80px",
+                            height: "100px"
                         }
-                    },
-                    'legend': {
-                        alignment: 'center',
-                        textStyle: {
-                            color: '#16b553',
-                            fontSize: 15
+                    };
+                    console.log(width);
+                }
+                else if (width1.matches) {
+                    var options = {
+                        'backgroundColor': 'white',
+                        'pieSliceBorderColor': 'white',
+                        'titlePosition': 'none',
+                        'width': 600,
+                        'height': 400,
+                        'pieSliceTextStyle': {
+                            color: 'black',
+                            fontSize: 18
+                        },
+                        'tooltip': {
+                            text: 'percentage',
+                            textStyle: {
+                                color: 'black',
+                                fontSize: 15
+                            }
+                        },
+                        'legend': {
+                            position: 'bottom',
+                            textStyle: {
+                                color: '#16b553',
+                                fontSize: 15
+                            }
+                        },
+                        'chartArea': {
+                            left: '20%',
+                            top: 20,
+                            width: "80px",
+                            height: "100px"
                         }
-                    },
-                    'chartArea': {
-                        left: 100,
-                        top: 10,
-                        width: "70%",
-                        height: "100px"
-                    }
-                };
-                var chart = new google.visualization.PieChart($('#piechart')[0]);
-                chart.draw(data, options);
-            }
+
+                    };
+                }
+                else if (width2.matches) {
+                    var options = {
+                        'backgroundColor': 'white',
+                        'pieSliceBorderColor': 'white',
+                        'titlePosition': 'none',
+                        'width': 600,
+                        'height': 400,
+                        'pieSliceTextStyle': {
+                            color: 'black',
+                            fontSize: 18
+                        },
+                        'tooltip': {
+                            text: 'percentage',
+                            textStyle: {
+                                color: 'black',
+                                fontSize: 15
+                            }
+                        },
+                        'legend': {
+                            position: 'none',
+                            textStyle: {
+                                color: '#16b553',
+                                fontSize: 15
+                            }
+                        },
+                        'chartArea': {
+                            left: 10,
+                            top: 20,
+                            width: "80px",
+                            height: "100px"
+                        }
+                    };
+                }
+                else if (width3.matches) {
+                    var options = {
+                        'backgroundColor': 'white',
+                        'pieSliceBorderColor': 'white',
+                        'titlePosition': 'none',
+                        'width': 600,
+                        'height': 400,
+                        'pieSliceTextStyle': {
+                            color: 'black',
+                            fontSize: 18
+                        },
+                        'tooltip': {
+                            text: 'percentage',
+                            textStyle: {
+                                color: 'black',
+                                fontSize: 15
+                            }
+                        },
+                        'legend': {
+                            position: 'none',
+                            textStyle: {
+                                color: '#16b553',
+                                fontSize: 15
+                            }
+                        },
+                        'chartArea': {
+                            right: 300,
+                            top: 20,
+                            width: "40px",
+                            height: "100px"
+                        }
+                    };
+                    console.log(width3);
+                }
+                else
+                    var options = {
+                        'backgroundColor': 'white',
+                        'pieSliceBorderColor': 'white',
+                        'titlePosition': 'none',
+                        'width': 600,
+                        'height': 400,
+                        'pieSliceTextStyle': {
+                            color: 'black',
+                            fontSize: 18
+                        },
+                        'tooltip': {
+                            text: 'percentage',
+                            textStyle: {
+                                color: 'black',
+                                fontSize: 15
+                            }
+                        },
+                        'legend': {
+                            position: 'bottom',
+                            textStyle: {
+                                color: '#16b553',
+                                fontSize: 15
+                            }
+                        },
+                        'chartArea': {
+                            left: 100,
+                            top: 10,
+                            width: "70%",
+                            height: "100px"
+                        }
+                    };
+            var chart = new google.visualization.PieChart($('#piechart')[0]);
+            chart.draw(data, options);}
+
         }
+        function debounce(func, time) {
+            var time = time || 100;
+            var timer;
+            return function (event) {
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(func, time, event);
+            };
+        }
+
+        function resizeContent() {
+            chart();
+        }
+        function resizeContent1() {
+            chart1();
+        }
+
     </script>
 </body>
 

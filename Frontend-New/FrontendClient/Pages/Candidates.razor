@@ -7,35 +7,47 @@
 @using ChartJs.Blazor.ChartJS.Common.Properties
 @using ChartJs.Blazor.Util
 
-<div class="wrapper1">
-    <NavMenuBar />
-    <main class="page-candidates d-flex flex-row">
-        <div class="candidates-list d-flex flex-column w-50">
-            <h1>Candidati</h1>
-            <div class="list d-flex flex-column w-100">
-                @if (candidates == null)
-                {
-                    <p>No candidates</p>
-                }
-                else
-                {
-                    @foreach (var item in candidates)
+
+
+
+<div class="fulll">
+    <div class="wrapper1">
+        <NavMenuBar />
+        <main class="page-candidates d-flex">
+            <!--Candidates List-->
+            <div class="candidates-list d-flex flex-column">
+                <h1>Candidați</h1>
+                <div class="list d-flex flex-column w-100">
+                    @if (candidates == null)
                     {
-                        <div class="card flex-row text-black mb-4 p-3">
-                            <div class="imagee align-self-center">
-                                <img src="assets/pnl.png" onload="chart()" />
-                            </div>
+                        <p>Nu există candidați pentru acest tip de alegeri în acest moment!</p>
+                    }
+                    else
+
+                    {
+                        @foreach (var item in candidates)
+                        {
+                            <div class="card flex-row text-black mb-4 p-3">
+                                <div class="imagee align-self-center">
+                                    <img src="assets/pnl.png" onload="chart()" />
+                                </div>
+                                
+                         
+                            
+
                             <div class="p-3 name">
                                 <h3 class="card-title text-center font-weight-bold">@item.LastName @item.FirstName</h3>
+                             </div>
+                                <div class="w-30 align-self-center">
+                                    <button class="btn btn-primary" disabled="@_hasVoted" id="voteButton" type="button" data-toggle="modal" data-target="#voteModal" @onclick="@(()=>SaveCandidate(item))">Voteaza</button>
+                                </div>
                             </div>
-                            <div class="w-30 align-self-center">
-                                <button class="btn btn-primary" disabled="@_hasVoted" id="voteButton" type="button" data-toggle="modal" data-target="#voteModal" @onclick="@(()=>SaveCandidate(item))">Voteaza</button>
-                            </div>
-                        </div>
+
+                        }
+
                     }
-                }
+                </div>
             </div>
-        </div>
 
         <div class="statistics d-flex flex-column w-50">
             <h1>Statistici</h1>
@@ -91,22 +103,27 @@
         </div> -->
     </main>
     <BottomBar />
+
 </div>
 
+
+<!--Confirm Vote Modal-->
 <div class="modal" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="voteModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content shadow rounded border-0">
             <div class="modal-header bg-warning text-center">
-                <h4 class="modal-title text-white w-100 font-weight-bold py-2">Confirmati Votul</h4>
+                <h4 class="modal-title text-white w-100 font-weight-bold py-2">Confirmați Votul</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="text-white">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
+
                     <p>@_savedCandidate.FirstName @_savedCandidate.LastName </p>
                     <label for="login" class="font-weight-bold">Introduceti CNP-ul</label>
                     <input hidden type="text" class="form-control" id="login" name="login" autocomplete="off" placeholder="CNP...">
+
                 </div>
             </div>
             <div class="modal-footer justify-content-center">
@@ -167,6 +184,7 @@
         HoverBorderWidth = 1,
         BorderColor = "#ffffff",
     };
+
 
     private Candidate[] candidates;
 
