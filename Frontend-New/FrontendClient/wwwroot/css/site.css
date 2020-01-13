@@ -17,13 +17,14 @@ html, body {
     border: none;
 }
 
+/*Auth Button Style*/
 #authButton {
     position: fixed;
     top: 30px;
     right: 60px;
 }
 
-#authButton:focus{
+#authButton:focus {
     color: white;
 }
 
@@ -32,36 +33,42 @@ html, body {
     color: white;
 }
 
-.btn-warning:hover{
+.btn-warning:hover {
     color: white;
 }
 
+/*Motivational message style*/
 .message {
     height: auto;
     width: 30%;
     margin-top: 6%;
     padding-right: 50px;
-    text-align: right;
 }
 
 .message h1 {
     text-align: left;
-    font-size: 35px;
+    font-weight: bold;
+    font-size: 6vh;
 }
 
-.message h1, p {
+.message h1, h3 {
     font-family: "Tahoma", "Geneva", sans-serif;
+    text-align: center;
 }
 
-.image{
-    background-image: url(../assets/vote-img.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 70%;
+/*Voting illustration style*/
+.image {
+    height: auto;
     width: 50%;
     margin-left: 10%;
 }
 
+.image img {
+    width: 100%;
+    height: 100%;
+}
+
+/*Modal Auth Content*/
 .modal:target {
     display: block;
 }
@@ -97,4 +104,59 @@ html, body {
 
 .modal-footer a:active {
     color: white;
+}
+
+/*Responsiveness*/
+@media only screen and (max-width: 1100px) {
+    .message {
+        padding-right: 30px;
+    }
+}
+
+@media only screen and (max-width: 990px) {
+    .image {
+        margin-left: 5%;
+    }
+
+    .message h1 {
+        font-size: 4vh;
+    }
+
+    .message h3 {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .image img {
+        width: 120%;
+        height: 120%;
+    }
+
+    .image {
+        margin-left: 0;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .cont {
+        flex-direction: column;
+    }
+
+    .message, .image {
+        padding: 0;
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    .image img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #authButton {
+        right: 40px;
+    }
 }

@@ -1,8 +1,9 @@
-﻿.cardHome {
+﻿/*Election types cards*/
+.cardHome {
     width: 250px;
     height: 390px;
     margin: 20px;
-    background-color: rgb(254,211,47);
+    background-color: #FED32F;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -29,6 +30,7 @@
     color: #343a40 !important;
 }
 
+/*Page Content*/
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -36,12 +38,13 @@
 }
 
 .page-main {
-    padding: 0 15%;
+    padding: 0 10%;
     margin-top: 65px;
     flex-grow: 1;
     margin-bottom: 57px;
     font-family: 'Bitter', serif;
     text-align: center;
+    overflow-y: auto;
 }
 
 .page-main h1 {
@@ -54,4 +57,18 @@
     margin-top: 30px;
     font-size: 30px;
     font-weight: bold;
+}
+
+/*Responsiveness*/
+@media only screen and (max-width: 500px){
+    .page-main h1{
+        font-size: 40px;
+    }
+    .cardHome {
+        width: 80%;
+        height: 330px;
+    }
+    .cardSpanText {
+        font-size: 30px;
+    }
 }
