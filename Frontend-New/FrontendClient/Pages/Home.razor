@@ -2,31 +2,32 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
-<div class="wrapper">
-    <NavMenuBar />
-    <main class="page-main d-flex flex-column align-items-center">
+    <div class="wrapper">
+        <NavMenuBar />
+        <main class="page-main d-flex align-items-center">
         <h1>Tipuri de alegeri disponibile</h1>
-        @if (types == null)
-        {
-            <div class="d-flex flex-row flex-wrap align-items-center justify-content-center" style="margin-top:60px">
-                <p class="p1">Nu exista tipuri de alegeri disponibile in acest moment!</p>
-                <p>Va rugam, reveniti!</p>
-            </div>      
-        }
-        else
-        {
-            @foreach (var item in types)
+
+            @if (types == null)
             {
-                <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
-                    <div class="d-flex align-items-center justify-content-center cardHome">
-                        <a href="#" class="cardSpanText" @onclick="NavigateToCandidates">@item.votingTypeName</a>
-                    </div>
+                <div class="d-flex flex-row flex-wrap align-items-center justify-content-center" style="margin-top:60px">
+                    <p class="p1">Nu exista tipuri de alegeri disponibile in acest moment!</p>
+                    <p>Va rugam, reveniti!</p>
                 </div>
             }
-        }
-    </main>
-    <BottomBar />
-</div>
+            else
+            {
+                @foreach (var item in types)
+                {
+                    <div class="d-flex flex-wrap align-items-center justify-content-center">
+                        <div class="d-flex align-items-center justify-content-center cardHome">
+                            <a class="cardSpanText" href="/candidates/@item.votingTypeID">@item.votingTypeName</a>
+                        </div>
+                    </div>
+                }
+            }
+        </main>
+        <BottomBar />
+    </div>
 
 @code
 {
@@ -48,10 +49,6 @@
         types = await Http.GetJsonAsync<VotingType[]>(apiUrl);
     }
 
-    public void NavigateToCandidates()
-    {
-        NavigationManager.NavigateTo("/candidates", true);
-    }
 }
 
 

@@ -34,6 +34,7 @@ namespace GoVote.Authentication
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = tokenValidationParams;
+                options.SaveToken = true;
                 options.RequireHttpsMetadata = false;
             });
 

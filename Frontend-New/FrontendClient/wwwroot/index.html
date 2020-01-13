@@ -18,6 +18,17 @@
     <app>Loading...</app>
 
     <script src="_framework/blazor.webassembly.js"></script>
+    <!-- Reference the included moment.js javascript file. -->
+    <script src="_content/ChartJs.Blazor/moment-with-locales.min.js" type="text/javascript" language="javascript"></script>
+
+    <!-- Reference the included ChartJs javascript file. -->
+    <script src="_content/ChartJs.Blazor/Chart.min.js" type="text/javascript" language="javascript"></script>
+
+    <!-- This is the glue between the C# code and the ChartJs charts -->
+    <script src="_content/ChartJs.Blazor/ChartJsBlazorInterop.js" type="text/javascript" language="javascript"></script>
+
+    <!-- Some styling -->
+    <link rel="stylesheet" href="_content/ChartJs.Blazor/ChartJSBlazor.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript">
@@ -63,7 +74,7 @@
             var type = document.getElementById("type");
             if (type)
                 type = type.value;
-            else 
+            else
                 type = 'Tara';
             google.charts.load("visualization", "1", {
                 'packages': ['corechart']
@@ -133,8 +144,9 @@
                         height: "100px"
                     }
                 };
-            var chart = new google.visualization.PieChart($('#piechart')[0]);
-            chart.draw(data, options);}
+                var chart = new google.visualization.PieChart($('#piechart')[0]);
+                chart.draw(data, options);
+            }
         }
 
         var chart1 = function (callback) {
@@ -152,7 +164,7 @@
                     ['Ana', 4],
                     ['Bla', 3]
                 ]);
-               
+
                 var options = {
                     'backgroundColor': 'white',
                     'pieSliceBorderColor': 'white',
@@ -184,8 +196,9 @@
                         height: "100px"
                     }
                 };
-            var chart = new google.visualization.PieChart($('#piechart')[0]);
-            chart.draw(data, options);}
+                var chart = new google.visualization.PieChart($('#piechart')[0]);
+                chart.draw(data, options);
+            }
         }
     </script>
 </body>

@@ -3,9 +3,11 @@ using GoVote.Data;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using GoVote.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoVote.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PartiesController : ControllerBase

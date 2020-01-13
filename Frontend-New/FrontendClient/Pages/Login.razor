@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject Shared.Services.IAuthService AuthService
 
 <div class="w-100 h-100 full-div">
     <div class="d-flex justify-content-center align-items-center w-100 h-100 cont">
@@ -31,7 +32,7 @@
                 </div>
             </div>
             <div class="modal-footer justify-content-center">
-                <a href="#" type="button" class="btn btn-outline-warning waves-effect"  @onclick="SendCnp">Autentificare</a>
+                <a type="button" class="btn btn-outline-warning waves-effect" @onclick="SendCnp">Autentificare</a>
             </div>
         </div>
     </div>
@@ -41,19 +42,31 @@
 @code {
     private string cnp;
 
-    private string apiUrl = "https://localhost:44380/api/login";
 
     protected async Task SendCnp()
     {
 
-        var request = new Dictionary<string, string>();
-        request["cnp"] = cnp;
+        var result = await AuthService.Login(cnp);
 
-        Citizen response = await Http.PostJsonAsync<Citizen>(apiUrl, request);
-
-        if (response.CNP == "6000611068050")
-
+        if (result.succes)
+        {
             NavigationManager.NavigateTo("/home", true);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/", true);
+        }
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        bool LoggedIn = await AuthService.LoggedIn();
+
+        if(LoggedIn)
+        {
+            NavigationManager.NavigateTo("home", true);
+        }
     }
 
     public class Citizen
@@ -73,6 +86,16 @@
         public string County { get; set; }
 
         public string City { get; set; }
+
         public Guid VotedFor { get; set; }
+    }
+
+    public class Response
+    {
+        public bool succes { get; set; }
+
+        public string Token { get; set; }
+
+        public Citizen citizen { get; set; }
     }
 }

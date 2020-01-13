@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\facultate_an_3\\NET\\GoVote\\GoVote\\GoVote\\GoVote.csproj": {}
+    "F:\\GoVote\\GoVote\\GoVote\\GoVote.csproj": {}
   },
   "projects": {
-    "D:\\facultate_an_3\\NET\\GoVote\\GoVote\\GoVote\\GoVote.csproj": {
+    "F:\\GoVote\\GoVote\\GoVote\\GoVote.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\facultate_an_3\\NET\\GoVote\\GoVote\\GoVote\\GoVote.csproj",
+        "projectUniqueName": "F:\\GoVote\\GoVote\\GoVote\\GoVote.csproj",
         "projectName": "GoVote",
-        "projectPath": "D:\\facultate_an_3\\NET\\GoVote\\GoVote\\GoVote\\GoVote.csproj",
-        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "D:\\facultate_an_3\\NET\\GoVote\\GoVote\\GoVote\\obj\\",
+        "projectPath": "F:\\GoVote\\GoVote\\GoVote\\GoVote.csproj",
+        "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
+        "outputPath": "F:\\GoVote\\GoVote\\GoVote\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

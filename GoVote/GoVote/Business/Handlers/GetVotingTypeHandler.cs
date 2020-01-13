@@ -30,7 +30,7 @@ namespace GoVote.Business.Handlers
             
             var result = from type in types
                          join candidate in candidates on type.VotingTypeID equals candidate.VotingTypeId
-                        select new { Voting = type.VotingTypeID, Firstname = candidate.FirstName, Lastname = candidate.LastName};
+                        select new { Voting = type.VotingTypeID, Firstname = candidate.FirstName, Lastname = candidate.LastName, candidate.ID};
             
             var votingTypeById = new Dictionary<string, string>();
             var listOfVotingTypes = new List<Dictionary<string, string>>();
@@ -43,8 +43,9 @@ namespace GoVote.Business.Handlers
                 {
                     foreach (var item in candidatesList.Where(v => v.Voting == votingType.VotingTypeID))
                     {
-                        votingTypeById.Add("First Name", item.Firstname);
-                        votingTypeById.Add("Last Name", item.Lastname);
+                        votingTypeById.Add("FirstName", item.Firstname);
+                        votingTypeById.Add("LastName", item.Lastname);
+                        votingTypeById.Add("CandidateId", item.ID.ToString());
                         listOfVotingTypes.Add(votingTypeById);
                         votingTypeById = new Dictionary<string, string>();
                     }

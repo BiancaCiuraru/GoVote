@@ -105,6 +105,7 @@ namespace GoVote
                 c.RoutePrefix = string.Empty;
             });
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
