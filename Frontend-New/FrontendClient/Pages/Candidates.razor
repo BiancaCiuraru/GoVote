@@ -8,8 +8,6 @@
 @using ChartJs.Blazor.Util
 
 
-
-
 <div class="fulll">
     <div class="wrapper1">
         <NavMenuBar />
@@ -39,72 +37,42 @@
                                     <div class="w-30">
                                          <button class="btn btn-primary" disabled="@_hasVoted" id="voteButton" type="button" data-toggle="modal" data-target="#voteModal" @onclick="@(()=>SaveCandidate(item))">Voteaza</button>
                                     </div>
-
                                 </div>
-                                
                             </div>
-
-                        }
-
+                         }
                     }
                 </div>
             </div>
 
-        <div class="statistics d-flex flex-column w-50">
-            <h1>Statistici</h1>
-            <div class="selection mx-auto  mb-3">
-                <select class="browser-default custom-select" @onchange="FirstSelect" id="type">
-                    @foreach (var item in types)
-                    {
-                        <option value="@item">@item</option>
-                    }
-                </select>
-                <select class="browser-default custom-select" id="cities" hidden="@_citiesHide">
-                    @foreach (var item in cities)
-                    {
-                        <option value="@item">@item</option>
-                    }
-                </select>
-                <select class="browser-default custom-select" @onchange="SecondSelect" id="counties" hidden="@_countiesHide">
-                    @foreach (var item in counties)
-                    {
-                        <option value="@item">@item</option>
-                    }
-                </select>
+            <div class="statistics d-flex flex-column w-50">
+                <h1>Statistici</h1>
+                <div class="selection mx-auto  mb-3">
+                    <select class="browser-default custom-select" @onchange="FirstSelect" id="type">
+                        @foreach (var item in types)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
+                    <select class="browser-default custom-select" id="cities" hidden="@_citiesHide">
+                        @foreach (var item in cities)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
+                    <select class="browser-default custom-select" @onchange="SecondSelect" id="counties" hidden="@_countiesHide">
+                        @foreach (var item in counties)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <ChartJsPieChart @ref="_pieChartJs" Config="@_config" Width="600" Height="300" />
+                </div>
             </div>
-            <div>
-                <ChartJsPieChart @ref="_pieChartJs" Config="@_config" Width="600" Height="300" />
-            </div>
-        </div>
-
-        <!--<div class="statistics d-flex flex-column w-50">
-            <h1>Statistici</h1>
-            <div class="selection mx-auto mb-3">
-                <img src="./assets/chart.png" onload="chart()" style="display: none;" />
-                <select class="browser-default custom-select" id="type" onchange="selected()">
-                    @foreach (var item in types)
-                    {
-                        <option value="@item">@item</option>
-                    }
-                </select>
-                <select class="browser-default custom-select" id="cities" style="display: none;" onchange="chart1()">
-                    @foreach (var item in cities)
-                    {
-                        <option value="@item">@item</option>
-                    }
-                </select>
-                <select class="browser-default custom-select" id="counties" style="display: none;" onchange="chart1()">
-                    @foreach (var item in counties)
-                    {
-                        <option value="@item">@item</option>
-                    }
-                </select>
-            </div>
-            <div id="piechart"></div>
-        </div> -->
-    </main>
+        </main>
+    </div>
     <BottomBar />
-
 </div>
 
 
