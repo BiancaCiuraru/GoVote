@@ -4,9 +4,11 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using GoVote.DTO;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoVote.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CandidatesController : ControllerBase

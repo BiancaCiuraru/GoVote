@@ -42,7 +42,8 @@ namespace GoVote.Business.Handlers
 
                 var claims = new[]
                     {
-                    new Claim("CNP", "")
+                    new Claim("CNP", ""),
+                    new Claim("VotedFor", citizen.VotedFor.ToString())
                 };
                 var token = new JwtSecurityToken("https://localhost:44380", "https://localhost:44380", claims, DateTime.UtcNow, expires: DateTime.UtcNow.AddMinutes(120), signingCredentials: credentials);
                 tokenData = new JwtSecurityTokenHandler().WriteToken(token);

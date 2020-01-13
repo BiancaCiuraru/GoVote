@@ -18,6 +18,17 @@
     <app>Loading...</app>
 
     <script src="_framework/blazor.webassembly.js"></script>
+    <!-- Reference the included moment.js javascript file. -->
+    <script src="_content/ChartJs.Blazor/moment-with-locales.min.js" type="text/javascript" language="javascript"></script>
+
+    <!-- Reference the included ChartJs javascript file. -->
+    <script src="_content/ChartJs.Blazor/Chart.min.js" type="text/javascript" language="javascript"></script>
+
+    <!-- This is the glue between the C# code and the ChartJs charts -->
+    <script src="_content/ChartJs.Blazor/ChartJsBlazorInterop.js" type="text/javascript" language="javascript"></script>
+
+    <!-- Some styling -->
+    <link rel="stylesheet" href="_content/ChartJs.Blazor/ChartJSBlazor.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -276,10 +287,13 @@
                             width: "70%",
                             height: "100px"
                         }
+
                     };
+
                 var chart = new google.visualization.PieChart($('#piechart')[0]);
                 chart.draw(data, options);
             }
+
         }
 
         var chart1 = function (callback) {
@@ -310,6 +324,7 @@
                         'width': 600,
                         'height': 400,
                         'pieSliceTextStyle': {
+
                             color: 'black',
                             fontSize: 18
                         },
@@ -367,6 +382,7 @@
                             width: "80px",
                             height: "100px"
                         }
+
                     };
                 }
                 else if (width2.matches) {
@@ -468,9 +484,11 @@
                             height: "100px"
                         }
                     };
+
                 var chart = new google.visualization.PieChart($('#piechart')[0]);
                 chart.draw(data, options);
             }
+
         }
 
         function debounce(func, time) {

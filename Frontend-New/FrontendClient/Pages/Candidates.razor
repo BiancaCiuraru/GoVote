@@ -1,5 +1,14 @@
-﻿@page "/candidates"
+﻿@page "/candidates/{Id}"
 @inject HttpClient Http
+@inject Shared.Services.IAuthService AuthService
+@inject NavigationManager NavigationManager
+@using ChartJs.Blazor.Charts
+@using ChartJs.Blazor.ChartJS.PieChart
+@using ChartJs.Blazor.ChartJS.Common.Properties
+@using ChartJs.Blazor.Util
+
+
+
 
 <div class="fulll">
     <div class="wrapper1">
@@ -14,6 +23,7 @@
                         <p>Nu există candidați pentru acest tip de alegeri în acest moment!</p>
                     }
                     else
+
                     {
                         @foreach (var item in candidates)
                         {
@@ -21,50 +31,80 @@
                                 <div class="imagee">
                                     <img src="assets/pnl.png" onload="chart()" />
                                 </div>
+
                                 <div class="d-flex flex-row flex-wrap align-items-center justify-content-center nameVote">
                                     <div class="name">
-                                        <h3 class="card-title font-weight-bold">@item</h3>
+                                        <h3 class="card-title text-center font-weight-bold">@item.LastName @item.FirstName</h3>
                                     </div>
                                     <div class="w-30">
-                                        <button class="btn btn-primary" id="voteButton" type="button" data-toggle="modal" data-target="#voteModal" onclick="modalauth">Votează</button>
+                                         <button class="btn btn-primary" disabled="@_hasVoted" id="voteButton" type="button" data-toggle="modal" data-target="#voteModal" @onclick="@(()=>SaveCandidate(item))">Voteaza</button>
                                     </div>
+
                                 </div>
                                 
                             </div>
+
                         }
+
                     }
                 </div>
             </div>
 
-            <!--Statistics-->
-            <div class="statistics d-flex flex-column">
-                <h1>Statistici</h1>
-                <div class="selection mx-auto mb-3">
-                    <img src="./assets/chart.png" onload="chart()" style="display: none;" />
-                    <select class="browser-default custom-select" id="type" onchange="selected()">
-                        @foreach (var item in types)
-                        {
-                            <option value="@item">@item</option>
-                        }
-                    </select>
-                    <select class="browser-default custom-select" id="cities" style="display: none;" onchange="chart1()">
-                        @foreach (var item in cities)
-                        {
-                            <option value="@item">@item</option>
-                        }
-                    </select>
-                    <select class="browser-default custom-select" id="counties" style="display: none;" onchange="chart1()">
-                        @foreach (var item in counties)
-                        {
-                            <option value="@item">@item</option>
-                        }
-                    </select>
-                </div>
-                <div id="piechart"></div>
+        <div class="statistics d-flex flex-column w-50">
+            <h1>Statistici</h1>
+            <div class="selection mx-auto  mb-3">
+                <select class="browser-default custom-select" @onchange="FirstSelect" id="type">
+                    @foreach (var item in types)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+                <select class="browser-default custom-select" id="cities" hidden="@_citiesHide">
+                    @foreach (var item in cities)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+                <select class="browser-default custom-select" @onchange="SecondSelect" id="counties" hidden="@_countiesHide">
+                    @foreach (var item in counties)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
             </div>
-        </main>
-        <BottomBar />
-    </div>
+            <div>
+                <ChartJsPieChart @ref="_pieChartJs" Config="@_config" Width="600" Height="300" />
+            </div>
+        </div>
+
+        <!--<div class="statistics d-flex flex-column w-50">
+            <h1>Statistici</h1>
+            <div class="selection mx-auto mb-3">
+                <img src="./assets/chart.png" onload="chart()" style="display: none;" />
+                <select class="browser-default custom-select" id="type" onchange="selected()">
+                    @foreach (var item in types)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+                <select class="browser-default custom-select" id="cities" style="display: none;" onchange="chart1()">
+                    @foreach (var item in cities)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+                <select class="browser-default custom-select" id="counties" style="display: none;" onchange="chart1()">
+                    @foreach (var item in counties)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+            </div>
+            <div id="piechart"></div>
+        </div> -->
+    </main>
+    <BottomBar />
+
 </div>
 
 
@@ -80,12 +120,14 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="login" class="font-weight-bold">Introduceți CNP-ul</label>
-                    <input type="text" class="form-control" id="login" name="login" autocomplete="off" placeholder="CNP..." required/>
+
+                    <p>@_savedCandidate.FirstName @_savedCandidate.LastName </p>
+                    <label for="login" class="font-weight-bold">Introduceti CNP-ul</label>
+                    <input hidden type="text" class="form-control" id="login" name="login" autocomplete="off" placeholder="CNP...">
                 </div>
             </div>
             <div class="modal-footer justify-content-center">
-                <a href="#" type="button" class="btn btn-outline-warning waves-effect">Confirmare</a>
+                <a @onclick="Vote" type="button" class="btn btn-outline-warning waves-effect">Confirmare</a>
             </div>
         </div>
     </div>
@@ -93,9 +135,12 @@
 
 
 @code{
+    [Parameter]
+    public string Id { get; set; }
+
     public class Candidate
     {
-        public Guid ID { get; set; }
+        public Guid CandidateId { get; set; }
 
         public string FirstName { get; set; }
 
@@ -106,53 +151,175 @@
 
     public class Statistics
     {
-        public float MaleVotes { get; set; }
+        public float maleVotes { get; set; }
 
-        public float FemaleVotes { get; set; }
+        public float femaleVotes { get; set; }
 
         public Statistics()
         {
-            MaleVotes = 0;
-            FemaleVotes = 0;
+            maleVotes = 0;
+            femaleVotes = 0;
         }
     }
 
+    private PieConfig _config = new PieConfig
+    {
+        Options = new PieOptions
+        {
+            Responsive = true,
+            Animation = new ArcAnimation
+            {
+                AnimateRotate = true,
+                AnimateScale = true
+            }
+        }
+    };
+    private ChartJsPieChart _pieChartJs;
+    private PieDataset pieSet = new PieDataset
+    {
+        BackgroundColor = new[] { ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString() },
+        BorderWidth = 0,
+        HoverBackgroundColor = ColorUtil.RandomColorString(),
+        HoverBorderColor = ColorUtil.RandomColorString(),
+        HoverBorderWidth = 1,
+        BorderColor = "#ffffff",
+    };
+
+
 
     private Candidate[] candidates;
-    private string apiUrl = "https://localhost:44380/api/candidates";
 
-    protected override async Task OnInitializedAsync()
-    {
-        candidates = await Http.GetJsonAsync<Candidate[]>(apiUrl);
-    }
-
-    List<string> cities = new List<string>() { "Bucuresti", "Iasi", "Oradea", "Galati", "Cluj", "Constanta"};
-    List<string> counties = new List<string>() { "Pascani", "Bla", "Laza", "Bla", "Bla"};
+    private string apiUrl = "https://localhost:44380/api/votingtype";
 
 
-    List<string> types = new List<string>() { "Tara", "Oras", "Localitate", "Varsta 18-30", "Varsta 31-60", "Varsta 61+", "Top 10 Orase", "Top 10 Candidati"};
+    private bool _hasVoted = false;
+    private bool _countiesHide = true;
+    private bool _citiesHide = true;
+
+    List<string> counties = new List<string>() { "Bucuresti", "Iasi", "Oradea", "Galati", "Cluj", "Constanta" };
+    List<string> cities = new List<string>() { "Pascani", "Bla", "Laza", "Bla", "Bla" };
+
+    Dictionary<string, double> Top10Candidates;
+    Dictionary<string, double> TopCities;
+
+
+    List<string> types = new List<string>() { "Tara", "Judet", "Localitate", "Varsta 18-30", "Varsta 31-60", "Varsta 61+", "Top 10 Orase", "Top 10 Candidati" };
     public string selectedString = "Tara";
     public Statistics content = new Statistics();
 
-    protected async Task TestFunction(ChangeEventArgs e)
+    public Candidate _savedCandidate = new Candidate();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        candidates = await Http.GetJsonAsync<Candidate[]>(apiUrl + "/" + Id);
+        _hasVoted = await AuthService.HasVoted();
+        content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/country");
+
+        _config.Data.Labels.Clear();
+        _config.Data.Labels.AddRange(new string[] { "Barbati", "Femei" });
+
+        pieSet.Data.Clear();
+        pieSet.Data.AddRange(new double[] {content.maleVotes,content.femaleVotes});
+
+        _config.Data.Datasets.Clear();
+        _config.Data.Datasets.Add(pieSet);
+
+    }
+
+
+    protected async Task FirstSelect(ChangeEventArgs e)
     {
         selectedString = e.Value.ToString();
+        _countiesHide = true;
+        _citiesHide = true;
 
-        if(selectedString == "Tara")
-            content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/country");
-        if(selectedString == "Oras")
-            content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/");
-        if(selectedString == "Localitate")
-            content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/county/");
-        if (selectedString == "Varsta 18-30")
-            content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/age18_30");
-        if (selectedString == "Varsta 31-60")
-            content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/age31_60");
-        if (selectedString == "Varsta 61+")
-            content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/age61_110");
-        if(selectedString == "Top 10 Candidati")
-            content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/top10Candidates");
-        if(selectedString == "Top 10 Orase")
-            content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/top10City");
+
+        if (selectedString == "Tara" || selectedString == "Varsta 18-30" || selectedString == "Varsta 31-60" || selectedString == "Varsta 61+" )
+        {
+
+            if (selectedString == "Tara")
+                content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/country");
+            else if (selectedString == "Varsta 18-30")
+                content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/age18_30");
+            else if (selectedString == "Varsta 31-60")
+                content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/age31_60");
+            else if (selectedString == "Varsta 61+")
+                content = await Http.GetJsonAsync<Statistics>("https://localhost:44380/api/statistics/age61_110");
+
+            _config.Data.Labels.Clear();
+            _config.Data.Labels.AddRange(new string[] { "Barbati", "Femei" });
+
+            pieSet.Data.Clear();
+            pieSet.Data.AddRange(new double[] {content.maleVotes,content.femaleVotes});
+
+            _config.Data.Datasets.Clear();
+            _config.Data.Datasets.Add(pieSet);
+
+        }
+        else if(selectedString == "Judet")
+        {
+            _countiesHide = false;
+        }
+        else if(selectedString == "Localitate")
+        {
+            _citiesHide = false;
+        }
+        else if(selectedString == "Top 10 Orase")
+        {
+            TopCities = await Http.GetJsonAsync<Dictionary<string,double>>("https://localhost:44380/api/Statistics/top10city");
+
+            _config.Data.Labels.Clear();
+            _config.Data.Labels.AddRange(TopCities.Keys);
+
+            pieSet.Data.Clear();
+            pieSet.Data.AddRange(TopCities.Values.ToArray());
+
+            _config.Data.Datasets.Clear();
+            _config.Data.Datasets.Add(pieSet);
+        }
+        else if(selectedString == "Top 10 Candidati")
+        {
+            _countiesHide = false;
+        }
+
     }
+
+    protected async Task SecondSelect(ChangeEventArgs e)
+    {
+        var _countyName = e.Value.ToString();
+
+        Top10Candidates = await Http.GetJsonAsync<Dictionary<string, double>>("https://localhost:44380/api/Statistics/top10candidates/" + _countyName);
+
+        _config.Data.Labels.Clear();
+        _config.Data.Labels.AddRange(Top10Candidates.Keys);
+
+        pieSet.Data.Clear();
+        pieSet.Data.AddRange(Top10Candidates.Values.ToArray());
+
+        _config.Data.Datasets.Clear();
+        _config.Data.Datasets.Add(pieSet);
+    }
+
+
+
+
+    private void SaveCandidate(Candidate candidate)
+    {
+        _savedCandidate = candidate;
+    }
+
+    protected async void Vote()
+    {
+        var _citizenId = await AuthService.GetCitizenId();
+
+        await Http.GetAsync("https://localhost:44380/api/candidates/vote/" + _citizenId + "/" + _savedCandidate.CandidateId);
+
+        await AuthService.Vote();
+
+        NavigationManager.NavigateTo("/home", true);
+    }
+
+
+
 }

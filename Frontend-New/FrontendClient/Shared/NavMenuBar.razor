@@ -1,10 +1,12 @@
 ﻿@inject NavigationManager NavigationManager
+@inject Shared.Services.IAuthService AuthService
 
 <nav class="navbar fixed-top navbar-light bg-warning">
-    <a class="logo" href=""><img src="./assets/logo.png" /></a>
+
+    <a class="logo" @onclick="NavigateToHome"><img src="./assets/logo.png" /></a>
     <div class="d-flex justify-content-center align-items-center nav-buttons ">
-        <a href="#" @onclick="NavigateToHome" class="home">Home</a>
-        <button type="button" class="btn btn-outline-dark font-weight-bold" @onclick="NavigateToLogin">Log Out</button>
+        <a @onclick="NavigateToHome" class="home">Home</a>
+        <button type="button" class="btn btn-outline-dark font-weight-bold" @onclick="LogOut">Log Out</button>
     </div>
 </nav>
 
@@ -15,8 +17,9 @@
         NavigationManager.NavigateTo("/home", true);
     }
 
-    public void NavigateToLogin()
+    public void LogOut()
     {
+        AuthService.Logout();
         NavigationManager.NavigateTo("/", true);
     }
 }
