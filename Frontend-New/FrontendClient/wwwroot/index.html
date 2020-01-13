@@ -31,6 +31,8 @@
     <link rel="stylesheet" href="_content/ChartJs.Blazor/ChartJSBlazor.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <script type="text/javascript">
         var modalauth = function (callback) {
 
@@ -47,7 +49,6 @@
         }
     </script>
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         var selected = function (callback) {
             $('#counties').hide();
@@ -58,20 +59,20 @@
                 if (type == 'Oras') {
                     $("#piechart").hide();
                     $('#cities').show();
-                    
-        window.addEventListener("resize", debounce(resizeContent1, 150));
+                    window.addEventListener("resize", debounce(chart1(), 150));
                 }
                 else if (type == 'Localitate') {
                     $("#piechart").hide();
                     $('#counties').show();
-        window.addEventListener("resize", debounce(resizeContent1, 150));
+                    window.addEventListener("resize", debounce(chart1(), 150));
                 }
                 else {
                     $("#piechart").show();
                     chart();
-        window.addEventListener("resize", debounce(resizeContent, 150));
+                    window.addEventListener("resize", debounce(chart(), 150));
                 }
             }
+            else window.addEventListener("resize", debounce(resizeContent1, 150));
         }
 
         var chart = function (callback) {
@@ -288,8 +289,10 @@
                         }
 
                     };
-            var chart = new google.visualization.PieChart($('#piechart')[0]);
-            chart.draw(data, options);}
+
+                var chart = new google.visualization.PieChart($('#piechart')[0]);
+                chart.draw(data, options);
+            }
 
         }
 
@@ -309,7 +312,6 @@
                     ['Bla', 3]
                 ]);
 
-               
                 var width = window.matchMedia("(max-width: 1300px) and (min-width: 920px)");
                 var width1 = window.matchMedia("(max-width: 910px) and (min-width: 700px)");
                 var width2 = window.matchMedia("(max-width: 699px) and (min-width: 460px)");
@@ -482,10 +484,13 @@
                             height: "100px"
                         }
                     };
-            var chart = new google.visualization.PieChart($('#piechart')[0]);
-            chart.draw(data, options);}
+
+                var chart = new google.visualization.PieChart($('#piechart')[0]);
+                chart.draw(data, options);
+            }
 
         }
+
         function debounce(func, time) {
             var time = time || 100;
             var timer;
@@ -494,14 +499,6 @@
                 timer = setTimeout(func, time, event);
             };
         }
-
-        function resizeContent() {
-            chart();
-        }
-        function resizeContent1() {
-            chart1();
-        }
-
     </script>
 </body>
 
